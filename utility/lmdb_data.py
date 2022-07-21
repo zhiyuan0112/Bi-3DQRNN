@@ -16,8 +16,8 @@ def create_lmdb_train(
     """
     def preprocess(data):
         new_data = []
-        data = minmax_normalize(data)
-        # data = minmax_normalize(data.transpose((2,0,1)))  # Remote sensed data.
+        data = minmax_normalize(data if data.shape[1]==data.shape[2] else data.transpose((2,0,1)))
+        # print(data.shape)  # expected to (c,h,w)
         if crop_sizes is not None:
             data = crop_center(data, crop_sizes[0], crop_sizes[1])
         for i in range(len(scales)):
